@@ -1,4 +1,3 @@
-
 struct Vector {
   1: list<double> content;
 } (
@@ -6,14 +5,25 @@ struct Vector {
 )
 
 enum BodyPart {
-  RIGHT_ARM = 1,
-  LEFT_ARM = 2
+  UNKNOWN_BODY_PART = 0,
+  HEAD = 1,
+  TORSO = 2,
+  LEFT_ARM = 3
+  RIGHT_ARM = 4,
+  LEFT_LEG = 5,
+  RIGHT_LEG = 6,
+  ALL_BODY_PART = 7,
+  BODY_PART_SIZE = 8
 }
 
 enum SkinPart {
-  FORE_ARM = 3,
-  UPPER_ARM = 4,
-  HAND = 5
+  UNKNOWN_SKIN_PART = 0,
+  HAND = 1,
+  FOREARM = 2,
+  UPPER_ARM = 3,
+  FRONT_TORSO = 4,
+  ALL_SKIN_PART = 5,
+  SKIN_PART_SIZE = 6
 }
 
 struct TaxelPose {
@@ -24,7 +34,7 @@ struct TaxelPose {
 service SkinCommand {
   bool calib();
 
-  list<double> get_touch_thresholds();
+  Vector get_touch_thresholds();
 
   bool set_binarization(1: bool flag);
   bool get_binarization();
@@ -35,11 +45,11 @@ service SkinCommand {
   bool set_smooth_factor(1: double factor);
   double get_smooth_factor();
 
-  bool set_threshold(1: i32 threshold);
-  i32 get_threshold();
+  bool set_safety_threshold(1: i32 threshold);
+  i32 get_safety_threshold();
 
-  bool set_gain(1: double gain);
-  double get_gain();
+  bool set_compensation_gain(1: double gain);
+  double get_compensation_gain();
 
   bool set_contact_gain(1: double gain);
   double get_contact_gain();
