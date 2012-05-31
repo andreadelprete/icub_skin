@@ -12,7 +12,7 @@ enum BodyPart {
   RIGHT_ARM = 4,
   LEFT_LEG = 5,
   RIGHT_LEG = 6,
-  ALL_BODY_PART = 7,
+  ALL_BODY_PARTS = 7,
   BODY_PART_SIZE = 8
 }
 
@@ -22,8 +22,14 @@ enum SkinPart {
   FOREARM = 2,
   UPPER_ARM = 3,
   FRONT_TORSO = 4,
-  ALL_SKIN_PART = 5,
+  ALL_SKIN_PARTS = 5,
   SKIN_PART_SIZE = 6
+}
+
+struct SkinPartInfo{
+  1: BodyPart bodyPart;
+  2: SkinPart skinPart;
+  3: i32 taxelNumber;
 }
 
 struct TaxelPose {
@@ -59,14 +65,10 @@ service SkinCommand {
   bool set_pose(1: BodyPart body_part, 2: SkinPart skin_part, 3: i32 taxel_index, 4: TaxelPose pose);
   TaxelPose get_pose(1: BodyPart body_part, 2: SkinPart skin_part, 3: i32 taxel_index);
 
-  bool set_poses_skin_part(1: BodyPart body_part, 2: SkinPart skin_part, 3: list<TaxelPose> poses);
-  list<TaxelPose> get_poses_skin_part(1: BodyPart body_part, 2: SkinPart skin_part);
+  bool set_poses(1: BodyPart body_part, 2: SkinPart skin_part, 3: list<TaxelPose> poses);
+  list<TaxelPose> get_poses(1: BodyPart body_part, 2: SkinPart skin_part);
 
-  bool set_poses_body_part(1: BodyPart body_part, 2: list<TaxelPose> poses);
-  list<TaxelPose> get_poses_body_part(1: BodyPart body_part);
-
-  bool set_poses_all(1: list<TaxelPose> poses);
-  list<TaxelPose> get_poses_all();
+  list<SkinPartInfo> get_skin_parts();
 
   map<string,string> get_info();
 }
